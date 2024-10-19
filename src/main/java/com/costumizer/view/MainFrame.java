@@ -11,9 +11,7 @@ public class MainFrame extends JFrame {
     private JButton botaoLibertar;
     private PainelCampo painelDoCampo;
     private PainelElementos painelDeElementos;
-    Elemento agua = new Elemento(Elementos.AGUA, Color.CYAN);
-    Elemento ar = new Elemento(Elementos.AR, Color.WHITE);
-    Elemento fogo = new Elemento(Elementos.FOGO, Color.ORANGE);
+
     public MainFrame(){
         //Configurações da janela
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -22,10 +20,9 @@ public class MainFrame extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         ControlladorBotoes ouvinte = new ControlladorBotoes(this);
-        Elemento[] elementos = {agua, ar, fogo};
-        painelDeElementos = new PainelElementos(elementos, ouvinte);
         JPanel bottonsPanel = new JPanel(new GridLayout(1, 3));
         painelDoCampo = new PainelCampo();
+        painelDeElementos = new PainelElementos(ouvinte);
         painelDeElementos.setLayout(new GridLayout(0, 3));
         painelDeElementos.setBounds(40, 470, 500, 30);
         bottonsPanel.setBounds(40, 500, 500, 60);
@@ -38,7 +35,6 @@ public class MainFrame extends JFrame {
         add(bottonsPanel);
         add(painelDeElementos);
         add(painelDoCampo);
-
         setVisible(true);
     }
 

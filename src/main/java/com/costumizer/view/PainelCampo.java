@@ -1,6 +1,8 @@
 package com.costumizer.view;
 
 import com.costumizer.models.Elemento;
+import com.costumizer.models.ElementoComposto;
+import com.costumizer.utilitarios.Compostos;
 import com.costumizer.utilitarios.Elementos;
 
 import javax.swing.*;
@@ -34,8 +36,8 @@ public class PainelCampo extends JPanel {
                     int deslocamentoY = elemento.getY() + elemento.getdY();
                     elemento.setBounds(deslocamentoX, deslocamentoY, 20, 20);
                 }
-                verificarColisao();
                 repaint();
+                verificarColisao();
             }
         });
         timer.start();
@@ -70,40 +72,48 @@ public class PainelCampo extends JPanel {
        }
     }
     public void transformar(Elemento elementoI, Elemento elementoJ) {
-        Elementos tipoI = elementoI.getTipo();
-        Elementos tipoJ = elementoJ.getTipo();
+        String formula = gerarFormula(elementoI, elementoJ);
         Elemento novoElemento = null;
-        if ((tipoI.equals(Elementos.FOGO) && tipoJ.equals(Elementos.AGUA)) ||
-                (tipoI.equals(Elementos.AGUA) && tipoJ.equals(Elementos.FOGO))) {
-            novoElemento = new Elemento(Elementos.VAPOR, Color.DARK_GRAY, "VP");
+        System.out.println(formula);
+        if (formula.equals(Compostos.VAPOR.getFormula())) {
+            novoElemento = new ElementoComposto(Compostos.VAPOR, new Color(225, 249, 250), "VAPOR", elementoI, elementoJ);
         }
-        else if ((tipoI.equals(Elementos.AR) && tipoJ.equals(Elementos.FOGO)) ||
-                (tipoI.equals(Elementos.FOGO) && tipoJ.equals(Elementos.AR))) {
-            novoElemento = new Elemento(Elementos.FOGO, Color.ORANGE, "FG");
+        else if (formula.equals(Compostos.MAGMA.getFormula())) {
+            novoElemento = new ElementoComposto(Compostos.MAGMA, new Color(255, 72, 0), "MAGMA", elementoI, elementoJ);
         }
-        else if ((tipoI.equals(Elementos.AGUA) && tipoJ.equals(Elementos.VAPOR)) ||
-                (tipoI.equals(Elementos.VAPOR) && tipoJ.equals(Elementos.AGUA))) {
-            novoElemento = new Elemento(Elementos.AGUA, Color.CYAN, "AG");
+        else if (formula.equals(Compostos.LAMA.getFormula())) {
+            novoElemento = new ElementoComposto(Compostos.LAMA, new Color(92, 85, 53), "LAMA", elementoI, elementoJ);
         }
-        else if ((tipoI.equals(Elementos.FOGO) && tipoJ.equals(Elementos.VAPOR)) ||
-                (tipoI.equals(Elementos.VAPOR) && tipoJ.equals(Elementos.FOGO))) {
-            novoElemento = new Elemento(Elementos.AR, Color.WHITE, "AR");
+        else if(formula.equals(Compostos.NUVEM.toString())){
+           novoElemento = new ElementoComposto(Compostos.NUVEM, new Color(107, 107, 107), "NUVEM", elementoI, elementoJ);
         }
+
         if(novoElemento != null){
-            remove(elementoI);
-            remove(elementoJ);
             int novaPosX = (elementoI.getX() + elementoJ.getX())/2;
             int novaPosY = (elementoI.getY() + elementoJ.getY())/2;
             novoElemento.setBounds(novaPosX, novaPosY, 20, 20);
-            elementos.remove(elementoI);
-            elementos.remove(elementoJ);
             novoElemento.setdX(elementoI.getdX());
             novoElemento.setdY(elementoI.getdY());
+            System.out.print(novaPosX +" "+ novaPosY);
+            System.out.print(novoElemento.getSigla());
+            remove(elementoI);
+            remove(elementoJ);
+            elementos.remove(elementoI);
+            elementos.remove(elementoJ);
             elementos.add(novoElemento);
             add(novoElemento);
             repaint();
         }
 
+    }
+    public String gerarFormula(Elemento elm1, Elemento elm2){
+        String nomeEl1 = elm1.toString();
+        String nomeEl2 = elm2.toString();
+        if(nomeEl1.compareTo(nomeEl2) < 0){
+            return nomeEl1 + "-" + nomeEl2;
+        }else{
+            return nomeEl2 + "-" + nomeEl1;
+        }
     }
     public void verificarColisao(){
         Rectangle elementoI;

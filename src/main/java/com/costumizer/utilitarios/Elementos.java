@@ -5,6 +5,7 @@ import java.awt.*;
 public enum Elementos {
     AGUA,
     FOGO,
-    AR,
-    VAPOR;
+    TERRA,
+    AR;
+
 }

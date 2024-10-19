@@ -4,7 +4,6 @@ import com.costumizer.models.Elemento;
 import com.costumizer.utilitarios.Elementos;
 import com.costumizer.view.MainFrame;
 import com.costumizer.view.PainelCampo;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +22,7 @@ public class ControlladorBotoes  implements ActionListener {
         JButton botaoApertado = (JButton) e.getSource();
         JButton botaoLibertar = mainFrame.getBotaoLibertar();
         PainelCampo painelCampo = mainFrame.getPainelDoCampo();
+
         if (botaoApertado.equals(botaoLibertar)) {
             painelCampo.rodarJogo();
         }else{
@@ -31,8 +31,8 @@ public class ControlladorBotoes  implements ActionListener {
             if (elementos.size() < 10) {
                 Elemento elemento = null;
                 switch (elementoApertado) {
-                    case AR:
-                        elemento = new Elemento(Elementos.AR, Color.WHITE, "AR");
+                    case TERRA:
+                        elemento = new Elemento(Elementos.TERRA, new Color(82, 40, 2), "TR");
                         break;
                     case AGUA:
                         elemento = new Elemento(Elementos.AGUA, Color.CYAN, "AG");
@@ -40,6 +40,8 @@ public class ControlladorBotoes  implements ActionListener {
                     case FOGO:
                         elemento = new Elemento(Elementos.FOGO, Color.ORANGE, "FG");
                         break;
+                    case AR:
+                        elemento = new Elemento(Elementos.AR, Color.WHITE, "AR");
                 }
                 if(elemento != null){
                     elementos.add(elemento);
