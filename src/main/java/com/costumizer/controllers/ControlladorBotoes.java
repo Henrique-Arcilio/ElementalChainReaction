@@ -21,10 +21,13 @@ public class ControlladorBotoes  implements ActionListener {
 
         JButton botaoApertado = (JButton) e.getSource();
         JButton botaoLibertar = mainFrame.getBotaoLibertar();
+        JButton botaoLimpar = mainFrame.getBotaoLimpar();
         PainelCampo painelCampo = mainFrame.getPainelDoCampo();
 
         if (botaoApertado.equals(botaoLibertar)) {
             painelCampo.rodarJogo();
+        }else if (botaoApertado.equals(botaoLimpar)){
+            painelCampo.encerrar();
         }else{
             Elementos elementoApertado = Elementos.valueOf(botaoApertado.getText());
             ArrayList<Elemento> elementos = mainFrame.getPainelDoCampo().getElementos();
@@ -33,6 +36,7 @@ public class ControlladorBotoes  implements ActionListener {
                 switch (elementoApertado) {
                     case TERRA:
                         elemento = new Elemento(Elementos.TERRA, new Color(82, 40, 2), "TR");
+                        elemento.setForeground(Color.white);
                         break;
                     case AGUA:
                         elemento = new Elemento(Elementos.AGUA, Color.CYAN, "AG");

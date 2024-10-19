@@ -10,30 +10,31 @@
         private int dX;
         private int dY;
         private String sigla;
-
         public Elemento(Color cor, String sigla){
             this.cor = cor;
             this.sigla = sigla;
-            setText(sigla);
-            setOpaque(true);
-            setBackground(cor);
+            inicializarConfigs();
         }
         public Elemento(Elementos tipo, Color cor) {
             this.tipo = tipo;
             this.cor = cor;
-            setOpaque(true);
-            setBackground(cor);
+            inicializarConfigs();
         }
 
         public Elemento(Elementos tipo, Color cor, String sigla) {
             this.tipo = tipo;
             this.cor = cor;
             this.sigla = sigla;
+            inicializarConfigs();
+        }
+        public void inicializarConfigs(){
             setOpaque(true);
             setBackground(cor);
             setText(sigla);
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setFont(new Font("Arial", Font.BOLD, 12));
+            setPreferredSize(new Dimension(24,24));
         }
-
         @Override
         public String toString(){
             return getTipo().toString();

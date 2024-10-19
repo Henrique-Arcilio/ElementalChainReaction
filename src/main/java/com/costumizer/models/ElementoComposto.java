@@ -13,11 +13,9 @@ public class ElementoComposto extends Elemento{
         this.secundario = secundario;
         this.tipo = tipo;
     }
-    private Elemento reagirComElemento(Elemento elemento){
+    public Elemento reagirComElemento(Elemento elemento){
         if(elemento.getTipo().equals(primario.getTipo())){
             return primario;
-        }else if(elemento.getTipo().equals(secundario.getTipo())) {
-            return secundario;
         }
         return null;
     }

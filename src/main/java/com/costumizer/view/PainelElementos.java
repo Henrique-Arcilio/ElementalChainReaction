@@ -27,6 +27,9 @@ public class PainelElementos extends JPanel {
                 JButton botao = new JButton(String.valueOf(elemento.getTipo()));
                 botao.setOpaque(true);
                 botao.setBackground(elemento.getCor());
+                if (elemento.getTipo().equals(Elementos.TERRA)){
+                    botao.setForeground(Color.white);
+                }
                 botao.addActionListener(ouvinte);
                 botoes.add(botao);
                 add(botao);

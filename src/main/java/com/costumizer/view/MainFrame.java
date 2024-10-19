@@ -9,6 +9,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
     private JButton botaoLibertar;
+    private JButton botaoLimpar;
     private PainelCampo painelDoCampo;
     private PainelElementos painelDeElementos;
 
@@ -30,7 +31,10 @@ public class MainFrame extends JFrame {
         painelDoCampo.setOpaque(true);
         painelDoCampo.setBackground(Color.LIGHT_GRAY);
         botaoLibertar = new JButton("libertar!");
+        botaoLimpar = new JButton("Limpar!");
         botaoLibertar.addActionListener(ouvinte);
+        botaoLimpar.addActionListener(ouvinte);
+        bottonsPanel.add(botaoLimpar);
         bottonsPanel.add(botaoLibertar);
         add(bottonsPanel);
         add(painelDeElementos);
@@ -60,5 +64,13 @@ public class MainFrame extends JFrame {
 
     public void setPainelDeElementos(PainelElementos painelDeElementos) {
         this.painelDeElementos = painelDeElementos;
+    }
+
+    public JButton getBotaoLimpar() {
+        return botaoLimpar;
+    }
+
+    public void setBotaoLimpar(JButton botaoLimpar) {
+        this.botaoLimpar = botaoLimpar;
     }
 }
