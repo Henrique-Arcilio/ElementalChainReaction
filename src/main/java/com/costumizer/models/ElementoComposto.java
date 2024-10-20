@@ -4,7 +4,7 @@ import com.costumizer.utilitarios.Elementos;
 import java.awt.*;
 
 public class ElementoComposto extends Elemento{
-    private Elemento primario;
+    private Elemento  primario;
     private Elemento secundario;
     private Compostos tipo;
     public ElementoComposto(Compostos tipo, Color cor, String sigla, Elemento primario, Elemento secundario) {
@@ -24,6 +24,7 @@ public class ElementoComposto extends Elemento{
     public String toString(){
         return getComposto().toString();
     }
+
     public Elemento getPrimario() {
         return primario;
     }

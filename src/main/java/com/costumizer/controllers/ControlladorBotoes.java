@@ -1,6 +1,7 @@
 package com.costumizer.controllers;
 
 import com.costumizer.models.Elemento;
+import com.costumizer.models.ElementoFactory;
 import com.costumizer.utilitarios.Elementos;
 import com.costumizer.view.MainFrame;
 import com.costumizer.view.PainelCampo;
@@ -29,24 +30,10 @@ public class ControlladorBotoes  implements ActionListener {
         }else if (botaoApertado.equals(botaoLimpar)){
             painelCampo.encerrar();
         }else{
-            Elementos elementoApertado = Elementos.valueOf(botaoApertado.getText());
+            String elementoApertado = botaoApertado.getText();
             ArrayList<Elemento> elementos = mainFrame.getPainelDoCampo().getElementos();
             if (elementos.size() < 10) {
-                Elemento elemento = null;
-                switch (elementoApertado) {
-                    case TERRA:
-                        elemento = new Elemento(Elementos.TERRA, new Color(82, 40, 2), "TR");
-                        elemento.setForeground(Color.white);
-                        break;
-                    case AGUA:
-                        elemento = new Elemento(Elementos.AGUA, Color.CYAN, "AG");
-                        break;
-                    case FOGO:
-                        elemento = new Elemento(Elementos.FOGO, Color.ORANGE, "FG");
-                        break;
-                    case AR:
-                        elemento = new Elemento(Elementos.AR, Color.WHITE, "AR");
-                }
+                Elemento elemento = ElementoFactory.criarElemento(elementoApertado);;
                 if(elemento != null){
                     elementos.add(elemento);
                     painelCampo.prepararElementos(elemento);

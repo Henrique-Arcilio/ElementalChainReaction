@@ -2,6 +2,7 @@ package com.costumizer.view;
 
 import com.costumizer.models.Elemento;
 import com.costumizer.models.ElementoComposto;
+import com.costumizer.models.ElementoFactory;
 import com.costumizer.utilitarios.Compostos;
 import com.costumizer.utilitarios.Elementos;
 
@@ -29,10 +30,18 @@ public class PainelCampo extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Elemento elemento : elementos){
+
                     if(elemento.getX() >= getWidth() - 30 || elemento.getX() <= 0){
                         elemento.setdX(elemento.getdX() * -1);
                     }else if(elemento.getY() >= getHeight() - 30 || elemento.getY() <= 0){
                         elemento.setdY(elemento.getdY() * -1);
+                    }
+                    //Limitando a velocidade em 7 unidades
+                    if(Math.abs(elemento.getdX()) > 7 || Math.abs(elemento.getdY()) > 7)
+                    {
+                        //incrementando de unidade/2 com o sinal inverto (para desacerelar)
+                        elemento.setdX(elemento.getdX() - (int) Math.signum(elemento.getdX())/2);
+                        elemento.setdY(elemento.getdY() - (int) Math.signum(elemento.getdY())/2);
                     }
                     mover(elemento);
                 }
@@ -69,47 +78,56 @@ public class PainelCampo extends JPanel {
             add(elemento);
         }
     }
+
     public int gerarMovimento(Random random){
         int vel = random.nextInt(3);
        switch (vel){
            case 0:
                return 0;
            case 1:
-               return -5;
+               return -4;
            default:
-               return 5;
+               return 4;
        }
     }
     public void transformar(Elemento elementoI, Elemento elementoJ) {
         String formula = gerarFormula(elementoI, elementoJ);
         Elemento novoElemento = null;
         System.out.println(formula);
+        //Caso seja transformação composto - simplesPrimario
         if ((elementoI instanceof ElementoComposto && elementoJ.getClass() == Elemento.class)) {
             novoElemento = ((ElementoComposto) elementoI).reagirComElemento(elementoJ);
         } else if (elementoJ instanceof ElementoComposto && elementoI.getClass() == Elemento.class) {
             novoElemento = ((ElementoComposto) elementoJ).reagirComElemento(elementoI);
-        } else {
-            novoElemento = criarElementoComposto(elementoI, elementoJ, formula);
         }
+
+        //Caso seja transformação compostoSimples(não primario)
+        if(novoElemento == null){
+            //Busca se tem alguma formula para essa interação
+                novoElemento = criarElementoComposto(formula);
+        }
+
         //O que ocorre pois colisao
         if(novoElemento != null) {
             reconfigurarElementos(elementoI, elementoJ, novoElemento);
-            //Não houve reaçao(movimentos invertem).
         }else{
+            //inverte movimento
             colisaoSemReacao(elementoI, elementoJ);
         }
     }
 
-    public Elemento criarElementoComposto(Elemento elementoI,Elemento elementoJ,String formula){
+    public Elemento criarElementoComposto(String formula){
         Elemento novoElemento = null;
         if (formula.equals(Compostos.VAPOR.getFormula())) {
-            novoElemento = new ElementoComposto(Compostos.VAPOR, new Color(225, 249, 250), "VAP", elementoI, elementoJ);
+            novoElemento = ElementoFactory.criarElemento("VAPOR");
         } else if (formula.equals(Compostos.MAGMA.getFormula())) {
-            novoElemento = new ElementoComposto(Compostos.MAGMA, new Color(255, 72, 0), "MAG", elementoI, elementoJ);
+            novoElemento = ElementoFactory.criarElemento("MAGMA");
         } else if (formula.equals(Compostos.LAMA.getFormula())) {
-            novoElemento =  new ElementoComposto(Compostos.LAMA, new Color(92, 85, 53), "LAM", elementoI, elementoJ);
+            novoElemento = ElementoFactory.criarElemento("LAMA");
         } else if (formula.equals(Compostos.NUVEM.getFormula())) {
-            novoElemento = new ElementoComposto(Compostos.NUVEM, new Color(107, 107, 107), "NUV", elementoI, elementoJ);
+            novoElemento = ElementoFactory.criarElemento("NUVEM");
+        }else if(formula.equals(Compostos.OBSIDIAN.getFormula())){
+            novoElemento = ElementoFactory.criarElemento("OBSIDIAN");
         }
         return novoElemento;
     }
@@ -130,22 +148,28 @@ public class PainelCampo extends JPanel {
             rectElementoJ = elementoJ.getBounds();
         }
     }
+    public void variarVelocidade(Elemento elemento){
+            if(elemento.getdX() > -10 && elemento.getdY() > -10){
+                elemento.setdX(elemento.getdY() - 2);
+                elemento.setdY(elemento.getdY() + -2);
+            }
+    }
     public void mover(Elemento elemento){
         elemento.setLocation(elemento.getX() + elemento.getdX(), elemento.getY() + elemento.getdY());
     }
     public void reconfigurarElementos(Elemento elementoI, Elemento elementoJ, Elemento novoElemento){
         int novaPosX = (elementoI.getX() + elementoJ.getX()) / 2;
         int novaPosY = (elementoI.getY() + elementoJ.getY()) / 2;
+        int novaVelocidadeX = elementoI.getdX();
+        int novaVelocidadeY = elementoI.getdY();
         novoElemento.setBounds(novaPosX, novaPosY, 30, 30);
-        novoElemento.setdX(elementoI.getdX());
-        novoElemento.setdY(elementoI.getdY());
-        System.out.print(novaPosX + " " + novaPosY);
-        System.out.print(novoElemento.getSigla());
-        remove(elementoI);
-        remove(elementoJ);
-        elementos.remove(elementoI);
-        elementos.remove(elementoJ);
-        elementos.add(novoElemento);
+        if(novoElemento.getClass() == ElementoComposto.class){
+            novaVelocidadeX *= 2;
+            novaVelocidadeY *=2;
+        }
+        novoElemento.setdX(novaVelocidadeX); novoElemento.setdY(novaVelocidadeY);
+        remove(elementoI); remove(elementoJ);
+        elementos.remove(elementoI); elementos.remove(elementoJ); elementos.add(novoElemento);
         add(novoElemento);
         repaint();
     }
