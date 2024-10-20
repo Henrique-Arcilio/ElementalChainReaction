@@ -13,10 +13,9 @@ public class PainelElementos extends JPanel {
 
     Elemento agua = new Elemento(Elementos.AGUA, Color.CYAN);
     Elemento terra = new Elemento(Elementos.TERRA, new Color(82, 40, 2));
-    Elemento fogo = new Elemento(Elementos.FOGO, Color.ORANGE);
+    Elemento fogo = new Elemento(Elementos.FOGO,  new Color(253, 116, 41));
     Elemento ar = new Elemento(Elementos.AR, Color.white);
-    Elemento eletricidade = new Elemento(Elementos.ELETRICIDADE, new Color(252, 224, 109));
-
+    Elemento eletricidade = new Elemento(Elementos.ELETRICIDADE, new Color(126, 51, 193, 249));
     public PainelElementos(ActionListener ouvinte){
         Elemento[] elementos = {ar, agua, terra, fogo, eletricidade};
         criarBotoes(elementos, ouvinte);

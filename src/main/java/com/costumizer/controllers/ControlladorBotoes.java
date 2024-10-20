@@ -32,7 +32,7 @@ public class ControlladorBotoes  implements ActionListener {
         }else{
             String elementoApertado = botaoApertado.getText();
             ArrayList<Elemento> elementos = mainFrame.getPainelDoCampo().getElementos();
-            if (elementos.size() < 10) {
+            if (elementos.size() < 30) {
                 Elemento elemento = ElementoFactory.criarElemento(elementoApertado);;
                 if(elemento != null){
                     elementos.add(elemento);

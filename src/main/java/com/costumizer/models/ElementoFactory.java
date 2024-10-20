@@ -15,20 +15,20 @@ public class ElementoFactory {
             case "AGUA":
                 return new Elemento(Elementos.AGUA, Color.CYAN, "AG");
             case "FOGO":
-                return new Elemento(Elementos.FOGO, Color.ORANGE, "FG");
+                return new Elemento(Elementos.FOGO, new Color(253, 116, 41), "FG");
             case "AR":
                 return new Elemento(Elementos.AR, Color.WHITE, "AR");
             case "ELETRICIDADE":
-                return new Elemento(Elementos.ELETRICIDADE, new Color(252, 224, 109), "EL");
+                return new Elemento(Elementos.ELETRICIDADE, new Color(126, 51, 193, 249), "EL");
             case "NUVEM":
-                return new ElementoComposto(Compostos.NUVEM, new Color(107, 107, 107), "NUV", criarElemento("AGUA"), criarElemento("AR"));
+                return new ElementoComposto(Compostos.NUVEM, new Color(71, 108, 138, 184), "NUV", criarElemento("AGUA"), criarElemento("AR"));
             case "VAPOR":
                 return new ElementoComposto(Compostos.VAPOR, new Color(225, 249, 250), "VAP",
                         criarElemento("AGUA"), criarElemento("AR"));
             case "LAMA":
                 return new ElementoComposto(Compostos.LAMA, new Color(92, 85, 53), "LAM", criarElemento("TERRA"), criarElemento("AGUA"));
             case "MAGMA":
-                return new ElementoComposto(Compostos.MAGMA, new Color(255, 72, 0), "MAG",
+                return new ElementoComposto(Compostos.MAGMA, new Color(255, 6, 6), "MAG",
                         criarElemento("TERRA"), criarElemento("FOGO"));
             case "OBSIDIAN":
                 return new ElementoComposto(Compostos.OBSIDIAN, Color.BLACK, "OBS",

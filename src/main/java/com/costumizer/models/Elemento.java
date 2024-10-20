@@ -35,6 +35,7 @@
             setFont(new Font("Arial", Font.BOLD, 12));
             setPreferredSize(new Dimension(24,24));
         }
+
         @Override
         public String toString(){
             return getTipo().toString();

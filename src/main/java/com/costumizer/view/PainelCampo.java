@@ -26,7 +26,7 @@ public class PainelCampo extends JPanel {
         this.elementos = elementos;
     }
     public void rodarJogo(){
-        timer = new Timer(60, new ActionListener() {
+        timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Elemento elemento : elementos){
@@ -90,17 +90,17 @@ public class PainelCampo extends JPanel {
                return 4;
        }
     }
-    public void transformar(Elemento elementoI, Elemento elementoJ) {
+    public void transformar(Elemento elementoI, Elemento elementoJ) throws NullPointerException {
         String formula = gerarFormula(elementoI, elementoJ);
         Elemento novoElemento = null;
         System.out.println(formula);
+
         //Caso seja transformação composto - simplesPrimario
         if ((elementoI instanceof ElementoComposto && elementoJ.getClass() == Elemento.class)) {
             novoElemento = ((ElementoComposto) elementoI).reagirComElemento(elementoJ);
         } else if (elementoJ instanceof ElementoComposto && elementoI.getClass() == Elemento.class) {
             novoElemento = ((ElementoComposto) elementoJ).reagirComElemento(elementoI);
         }
-
         //Caso seja transformação compostoSimples(não primario)
         if(novoElemento == null){
             //Busca se tem alguma formula para essa interação
@@ -140,12 +140,14 @@ public class PainelCampo extends JPanel {
         elementoI.setdY(elementoJ.getdY());
         elementoJ.setdX(dxElementoI);
         elementoJ.setdY(dyElementoI);
-        while(recElementoI.intersects(rectElementoJ)){
+        int contador = 0;
+        while(recElementoI.intersects(rectElementoJ) && contador != 10){
             mover(elementoI);
             mover(elementoJ);
             //Atualizando a informação dos bounds para o loop verificar
             recElementoI = elementoI.getBounds();
             rectElementoJ = elementoJ.getBounds();
+            contador +=1;
         }
     }
     public void variarVelocidade(Elemento elemento){
@@ -165,7 +167,7 @@ public class PainelCampo extends JPanel {
         novoElemento.setBounds(novaPosX, novaPosY, 30, 30);
         if(novoElemento.getClass() == ElementoComposto.class){
             novaVelocidadeX *= 2;
-            novaVelocidadeY *=2;
+            novaVelocidadeY *= 2;
         }
         novoElemento.setdX(novaVelocidadeX); novoElemento.setdY(novaVelocidadeY);
         remove(elementoI); remove(elementoJ);
@@ -173,6 +175,7 @@ public class PainelCampo extends JPanel {
         add(novoElemento);
         repaint();
     }
+
     public String gerarFormula(Elemento elm1, Elemento elm2){
         String nomeEl1 = elm1.toString();
         String nomeEl2 = elm2.toString();
