@@ -26,14 +26,14 @@ public class PainelCampo extends JPanel {
         this.elementos = elementos;
     }
     public void rodarJogo(){
-        timer = new Timer(10, new ActionListener() {
+        timer = new Timer(30, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Elemento elemento : elementos){
 
-                    if(elemento.getX() >= getWidth() - 30 || elemento.getX() <= 0){
+                    if(elemento.getX() >= getWidth() - elemento.getWidth() || elemento.getX() <= 0){
                         elemento.setdX(elemento.getdX() * -1);
-                    }else if(elemento.getY() >= getHeight() - 30 || elemento.getY() <= 0){
+                    }else if(elemento.getY() >= getHeight() - elemento.getHeight() || elemento.getY() <= 0){
                         elemento.setdY(elemento.getdY() * -1);
                     }
                     //Limitando a velocidade em 7 unidades
@@ -93,7 +93,6 @@ public class PainelCampo extends JPanel {
     public void transformar(Elemento elementoI, Elemento elementoJ) throws NullPointerException {
         String formula = gerarFormula(elementoI, elementoJ);
         Elemento novoElemento = null;
-        System.out.println(formula);
 
         //Caso seja transformação composto - simplesPrimario
         if ((elementoI instanceof ElementoComposto && elementoJ.getClass() == Elemento.class)) {
@@ -128,6 +127,8 @@ public class PainelCampo extends JPanel {
             novoElemento = ElementoFactory.criarElemento("NUVEM");
         }else if(formula.equals(Compostos.OBSIDIAN.getFormula())){
             novoElemento = ElementoFactory.criarElemento("OBSIDIAN");
+        }else if(formula.equals(Compostos.MAGNETICO.getFormula())){
+            novoElemento = ElementoFactory.criarElemento("MAGNETICO");
         }
         return novoElemento;
     }

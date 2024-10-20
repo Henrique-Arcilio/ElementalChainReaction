@@ -2,24 +2,20 @@ package com.costumizer.controllers;
 
 import com.costumizer.models.Elemento;
 import com.costumizer.models.ElementoFactory;
-import com.costumizer.utilitarios.Elementos;
 import com.costumizer.view.MainFrame;
 import com.costumizer.view.PainelCampo;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 public class ControlladorBotoes  implements ActionListener {
-    private MainFrame mainFrame;
+    private final MainFrame mainFrame;
 
     public ControlladorBotoes(MainFrame mainFrame){
         this.mainFrame = mainFrame;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
         JButton botaoApertado = (JButton) e.getSource();
         JButton botaoLibertar = mainFrame.getBotaoLibertar();
         JButton botaoLimpar = mainFrame.getBotaoLimpar();
@@ -39,9 +35,8 @@ public class ControlladorBotoes  implements ActionListener {
                     painelCampo.prepararElementos(elemento);
                     painelCampo.addElementosNaTela();
                     painelCampo.repaint();
-                    System.out.println("1");
                 }
-            } else {
+            }else {
                 JOptionPane.showMessageDialog(null, "Máximo de elementos atingido");
             }
         }

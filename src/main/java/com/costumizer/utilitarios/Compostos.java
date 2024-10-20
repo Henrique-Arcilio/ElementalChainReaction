@@ -5,7 +5,8 @@ public enum Compostos {
     LAMA(Elementos.AGUA.toString()+  "-" +Elementos.TERRA.toString()),
     MAGMA(Elementos.FOGO.toString()+  "-" +Elementos.TERRA.toString()),
     NUVEM(Elementos.AGUA.toString()+ "-" +Elementos.AR.toString()),
-    OBSIDIAN(Elementos.AGUA.toString() + "-" + Compostos.MAGMA.toString());
+    OBSIDIAN(Elementos.AGUA.toString() + "-" + Compostos.MAGMA.toString()),
+    MAGNETICO(Elementos.ELETRICO.toString() + "-" + Elementos.TERRA.toString());
 
     final String formula;
     private Compostos(String formula){

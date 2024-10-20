@@ -21,12 +21,12 @@ public class MainFrame extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         ControlladorBotoes ouvinte = new ControlladorBotoes(this);
-        JPanel bottonsPanel = new JPanel(new GridLayout(1, 3));
+        JPanel bottonsPanel = new JPanel(new GridLayout(1, 3, 20,0));
         painelDoCampo = new PainelCampo();
         painelDeElementos = new PainelElementos(ouvinte);
         painelDeElementos.setLayout(new GridLayout(0, 3));
-        painelDeElementos.setBounds(40, 470, 500, 30);
-        bottonsPanel.setBounds(40, 500, 500, 60);
+        painelDeElementos.setBounds(40, 450, 500, 30);
+        bottonsPanel.setBounds(140, 500, 300, 50);
         painelDoCampo.setBounds(40, 40, 500, 400);
         painelDoCampo.setOpaque(true);
         painelDoCampo.setBackground(Color.LIGHT_GRAY);
